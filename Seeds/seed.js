@@ -34,4 +34,5 @@ connecting.once("open", async () => {
         friends: randomName
     });
     console.table(userData);
+    process.exit(0);
 })
