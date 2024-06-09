@@ -1,6 +1,6 @@
 //not server.js because this is all backend
 const express = require('express');
-const db = require('./config/connection');
+const db = require('./configuration/connection');
 const routes = require('./routes');
 
 const cwd = process.cwd();//do I need this?

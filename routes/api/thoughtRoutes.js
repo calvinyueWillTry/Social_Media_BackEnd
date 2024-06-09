@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {
+const {//from thoughtControls.js
   getThoughts,
   getSingleThought,
   createThought,

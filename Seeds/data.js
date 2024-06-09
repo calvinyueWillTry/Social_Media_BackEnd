@@ -10,9 +10,12 @@ const userLastName = [
     "Joel", "Josh", "Levi", "Matthias", "Michael",
     "Nathanael", "Obed", "Paul", "Phillip", "Seth"
 ];
-const initialPostsLife = ["What is the meaning of life?" ];
-const initialPostRule = ["What is a guideline for your life?"];
-const initialPostBDay = ["Today is my birthday!"]
+const userEmails = [
+    "abc123@yahoo.com", "222def@hotmail.com", "345ghi@gmail.com", "444hij@comcast.net", "klm543@uoregon.edu",
+    "aaa111@yahoo.com", "nop567@hotmail.com", "hip789@gmail.com", "432pqr@comcast.net", "stu890@uoregon.edu",
+    "uvw001@yahoo.com", "012wxy@hotmail.com", "yza321@gmail.com", "135bdf@comcast.net", "246ceg@uoregon.edu",
+    "3a5c7b@yahoo.com", "4d5e6f@hotmail.com", "dent15@gmail.com", "mongo@comcast.net", "mongoDB@uoregon.edu"
+];
 const postingsLife = [//20 postings
     "Tom Lehrer: Life is like a sewer: what you get out of it depends on what you put into it.",
     "Forrest Gump: Life is like a box of chocolates. You never know what you're gonna get.",
@@ -41,27 +44,43 @@ const postingsBDay = [
 ];
 const randomItem_Arr = (array) => array[Math.floor(Math.random()*array.length)];
 // Variable = (OBJECT to place value into) => OBJECT[rounds down to the nearest integer, ensure it's a valid index(generate 1 random floating-point number between 0 (inclusive) and 1 (exclusive(from the array))*the length of the array)]
-const randomName = () => `${randomItem_Arr(userFirstName)} " " ${randomItem_Arr(userLastName)}`;
+const randomName = () => `${randomItem_Arr(userFirstName)} " " ${randomItem_Arr(userLastName)}: " " ${randomItem_Arr(userEmails)}`;
+console.log(randomName);
 //concatenate the random first and last names with " " in between to add a space
 const randomConverse_Life = (question, conversing) => {//first post line 13
     const resultsLife = [];
     //loop through the responses
     for (let i = 0; i < conversing; i++) {
         resultsLife.push({
-            conversation: `${initialPostsLife[0]}: ${randomItem_Arr(postingsLife)}`//responses from lines 16-23
+            conversation: `${randomItem_Arr(postingsLife)}`//responses from lines 16-23
         })
     }
+    console.log(resultsLife);
     return resultsLife;
 };
-const conversations = randomConverse_Life("What is the meaning of life?", 6);
-console.log(conversations);
+//const conversations = randomConverse_Life("What is the meaning of life?", 6);
+//console.log(conversations);//registers
 //repeat for the 2 other question and responses
 const randomConverse_Rule = (questions, converse) => {
-
+    const resultsRule = [];
+    for(let i = 0; i < converse; i++) {
+        resultsRule.push({
+            conversation: `${randomItem_Arr(postingsRule)}`
+        })
+    }
+    console.log(resultsRule);
+    return resultsRule;
 };
 randomConverse_bday = (questioning, conversationing) => {
 //not able to export? 
-
+    const resultBday = [];
+    for (let i = 0; i < conversationing; i++){
+        resultBday.push({
+            conversation: `${randomItem_Arr(postingsBDay)}`
+        })
+    }
+    console.log(resultBday);
+    return resultBday;
 }
 
 module.exports = {randomName, randomConverse_Life, randomConverse_Rule, randomConverse_bday}
