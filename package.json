@@ -1,12 +1,21 @@
 {
+  "name": "Social-Media_Backend",
+  "version": "1.0.1",
+  "description": "Mongodb back-end project",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index",
+    "seed": "node utils/seed"
+  },
   "dependencies": {
     "express": "^4.19.2",
-    "inquirer": "^8.2.4",
     "mongo": "^0.1.0",
     "mongodb": "^6.7.0",
-    "mongoose": "^8.4.1",
-    "npm": "^10.8.1",
-    "run": "^1.5.0",
-    "seed": "^0.4.4"
+    "mongoose": "^8.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
   }
 }

@@ -17,3 +17,6 @@ db.once('open', () => {
     console.log(`API server running on port url http://localhost:${PORT}!`);
   });
 });
+//run the following in the main terminal, because it needs to be manually reactivated each time:
+//mongod --dbpath ~/data/db --logpath ~/data/log/mongodb/mongo.log --fork
+//ps aux | grep -v grep | grep mongod
