@@ -43,54 +43,10 @@ const postingsBDay = [
     "You look younger than ever! Happy birthday!"
 ];
 const randomItem_Arr = (array) => array[Math.floor(Math.random()*array.length)];
-//console.log (userFirstName, userLastName, userEmails);//success!
-// Variable = (OBJECT to place value into) => OBJECT[rounds down to the nearest integer, ensure it's a valid index(generate 1 random floating-point number between 0 (inclusive) and 1 (exclusive(from the array))*the length of the array)]
-const randomName = {
-firstName: randomItem_Arr(userFirstName),  
-lastName: randomItem_Arr(userLastName), 
-userEmail: randomItem_Arr(userEmails)
+const randomName = () => {
+    `${randomItem_Arr(userFirstName)} ${userLastName}`
 };
-
-//SALVAGE! copy from activity 28, and then revise below, and start over on seed.js
-console.log(randomName);
-//concatenate the random first and last names with " " in between to add a space
-const randomConverse_Life = (conversing) => {//first post line 13
-    console.log("life", conversing);//Life undefined 19 times
-    const resultsLife = [];
-    //loop through the responses
-    for (let i = 0; i < conversing; i++) {
-        resultsLife.push({
-            conversation: `${randomItem_Arr(postingsLife)}`//responses from lines 16-23
-        })
-    }
-    console.log(resultsLife);//success
-    return resultsLife;
-};
-//const conversations = randomConverse_Life("What is the meaning of life?", 6);
-//console.log(conversations);//registers
-//repeat for the 2 other question and responses
-const randomConverse_Rule = (converse) => {
-    console.log("rule", converse);
-    const resultsRule = [];
-    for(let i = 0; i < converse; i++) {
-        resultsRule.push({
-            conversation: `${randomItem_Arr(postingsRule)}`
-        })
-    }
-    //console.log(resultsRule);
-    return resultsRule;
-};
-randomConverse_bday = (conversationing) => {
-//not able to export? 
-console.log("bday", conversationing)    
-const resultBday = [];
-    for (let i = 0; i < conversationing; i++){
-        resultBday.push({
-            conversation: `${randomItem_Arr(postingsBDay)}`
-        })
-    }
-    //console.log(resultBday);//[]
-    return resultBday;
-}
-
-module.exports = {randomName, randomConverse_Life, randomConverse_Rule, randomConverse_bday}
+const randomEmail = () => { `${randomItem_Arr(userEmails)}` };
+const 
+const getRandomName = () =>
+  `${getRandomArrItem(names)} ${getRandomArrItem(names)}`

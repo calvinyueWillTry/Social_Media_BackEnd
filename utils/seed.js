@@ -2,10 +2,10 @@ const connecting = require("../configuration/connection");
 
 const { User, Thought } = require("../models");
 const {randomName, randomConverse_Life, randomConverse_Rule, randomConverse_bday} = require("./data");
-console.log('connect');//connect!
+console.log('connect', randomName);//connect!
 connecting.on("error", (err) => err);//checks for error. Stuck here
 connecting.once("open", async () => {
-    console.log('connected');
+    //console.log('connected');
     let postCheck = await connecting.db.listCollections({name: "posts"}).toArray;
     //check if there have already been previous posts that currently exist
     if (postCheck.length > 0) {
@@ -18,8 +18,8 @@ connecting.once("open", async () => {
     };
 
     const accounts = [];
-    for (let i = 0; i < 20; i++) {
-        const userPostings = randomConverse_Life();// generates random post about this for each user
+    for (let i = 0; i < 1; i++) {
+        const userPostings = randomConverse_Life(1);// generates random post about this for each user
         const totalName = randomName();
         const firstName = totalName.split("")[0];//binary of arrays?
         const lastName = totalName.split("")[1];
@@ -29,10 +29,11 @@ connecting.once("open", async () => {
     }
     const userData = await User.create(accounts);
     await Thought.create({
-        username, email: randomName,
+        username, 
+        email: randomName,
         thoughts: randomConverse_Life,//how to randomly select from the accounts?
         friends: randomName
     });
-    console.table(userData);
+    //console.table(userData);
     process.exit(0);
 })
