@@ -3,7 +3,7 @@ const User = require('../models/User');
 module.exports = {
   async getUsers(req, res) {
     try {
-      const users = await User.find();
+      const users = await User.find().populate("thoughts").populate("friends");
       res.json(users);
     } catch (err) {
       res.status(500).json(err);
@@ -12,7 +12,9 @@ module.exports = {
   async getSingleUser(req, res) {
     try {
       const user = await User.findOne({ _id: req.params.userId })
-        .select('-__v');
+      .populate("thoughts")
+      .populate("friends")
+      .select('-__v');
 //e.g. ("-friends") would exclude the friends column
       if (!user) {
         return res.status(404).json({ message: 'No user with that ID' });
@@ -25,6 +27,7 @@ module.exports = {
   },
   // create a new user
   async createUser(req, res) {
+    console.log(req.body)
     try {
       const UserData = await User.create(req.body);
       res.json(UserData);
@@ -52,15 +55,11 @@ module.exports = {
   },
   async deleteUser(req, res) {
     try {
-      const forgetMe = await User.findOne({ _id: req.params.userId });
-  
-      if (!forgetMe) {
-        return res.status(404).json({ message: 'No thoughts originally logged with this id!' });
-      }
+      
   
       const users = await User.findOneAndDelete(
-        { forgetMe: req.params.userId },
-        { $pull: { forgetMe: req.params.userId } },
+        { _id: req.params.userId },
+        
         { new: true }
       );
   
@@ -80,12 +79,12 @@ module.exports = {
     try {//friend is an existing user
       const friend = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $addToSet: { userSchema: req.body } },
+        { $addToSet: { friends : req.params.friendId } },//userSchema is the parent, friends chid
         { runValidators: true, new: true }
       );
   
       if (!friend) {
-        return res.status(404).json({ message: 'No friends found with this id!' });
+        return res.status(404).json({ message: 'No friend found with this id!' });
       }
   
       res.json(friend);
@@ -98,7 +97,7 @@ module.exports = {
     try {
       const forgetThem = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $pull: { userSchema: { userId: req.params.userId } } },
+        { $pull: { friends: req.params.friendId } },//removes from friends array
         { runValidators: true, new: true }
       )
   

@@ -28,7 +28,7 @@ module.exports = {
     try {
       const thinker = await Thought.create(req.body);
       const user = await User.findOneAndUpdate(
-        { _id: req.body.userId },
+        { username: req.body.username },
         { $addToSet: { thoughts:thinker._id } },//thoughtText in model?
         { new: true }
       );
@@ -48,11 +48,15 @@ module.exports = {
   async updateThought(req, res) {
     try {
       const thinking = await Thought.findOneAndUpdate(
-        { _id: req.params.thoughtId },
+        { username: req.body.username },
         { $set: req.body },
         { runValidators: true, new: true }
       );
-
+      await User.findOneAndUpdate(
+        { username: req.body.username },
+        {$addToSet: {thoughts: thinking._id}},
+        { runValidators: true, new: true }
+      )
       if (!thinking) {
         return res.status(404).json({ message: 'No thoughts logged with this id!' });
       }
@@ -89,7 +93,7 @@ module.exports = {
     }
   },
   // Add a video response
-  async addReaction(req, res) {
+  async addReaction(req, res) {//comparable to addFriend
     try {
       const thoughtful = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
@@ -107,7 +111,7 @@ module.exports = {
     }
   },
   // Remove video response
-  async removeReaction(req, res) {
+  async removeReaction(req, res) {//comparable to removeFriend
     try {
       const forgetThatThought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
