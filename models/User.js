@@ -13,8 +13,8 @@ const userSchema = new Schema({
         required: true,
         unique: true,
         //match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/],
-        
-    },//email matching validation
+        //email matching validation
+    },
     thoughts: [
         {
             type: Schema.Types.ObjectId,

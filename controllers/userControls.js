@@ -29,7 +29,7 @@ module.exports = {
   async createUser(req, res) {
     console.log(req.body)
     try {
-      const UserData = await User.create(req.body);
+      const UserData = await User.create(req.body);//username and email
       res.json(UserData);
     } catch (err) {
       res.status(500).json(err);
@@ -38,7 +38,7 @@ module.exports = {
   async updateUser(req, res) {
     try {
       const useful = await User.findOneAndUpdate(
-        { _id: req.params.userId },
+        { _id: req.params.userId },//username and email, id in url
         { $set: req.body },
         { runValidators: true, new: true }
       );
@@ -59,7 +59,7 @@ module.exports = {
   
       const users = await User.findOneAndDelete(
         { _id: req.params.userId },
-        
+        //id in url
         { new: true }
       );
   

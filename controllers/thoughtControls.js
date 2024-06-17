@@ -92,14 +92,14 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // Add a video response
-  async addReaction(req, res) {//comparable to addFriend
+  // Add a response
+  async addReaction(req, res) {//comparable to addFriend post route 
     try {
       const thoughtful = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $addToSet: { responses: req.body } },
+        { $addToSet: { reactionBody: req.body } },
         { runValidators: true, new: true }
-      );
+      );//reactionBody and username - NOT UPDATING
 
       if (!thoughtful) {
         return res.status(404).json({ message: 'No thoughts logged with this id!' });
@@ -110,8 +110,8 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // Remove video response
-  async removeReaction(req, res) {//comparable to removeFriend
+  // Remove response
+  async removeReaction(req, res) {//comparable to removeFriend, except there's nothing to remove right now
     try {
       const forgetThatThought = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },

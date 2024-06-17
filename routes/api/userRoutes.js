@@ -16,12 +16,11 @@ router.route('/').get(getUsers).post(createUser);
 router
   .route('/:userId')
   .get(getSingleUser)
-  .put(updateUser)
+  .put(updateUser)//fill JSON
   .delete(deleteUser);
 
 // /api/users/:userId/friends/:friendId
 router.route('/:userId/friends/:friendId').post(addFriend).delete(removeFriend);
-// /api/users/:userId/friends/:friendId
-
+//blank JSON both times
 
 module.exports = router;
