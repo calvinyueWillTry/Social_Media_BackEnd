@@ -1,4 +1,3 @@
-//videocontroller converts to thought, then copy/convert to userecontroller
 const { Thought, User } = require('../models');
 
 module.exports = {
@@ -23,7 +22,7 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  // create a new video
+  // create a new thought from a specific username in the req.body
   async createThought(req, res) {
     try {
       const thinker = await Thought.create(req.body);
@@ -52,7 +51,7 @@ module.exports = {
         { $set: req.body },
         { runValidators: true, new: true }
       );
-      await User.findOneAndUpdate(
+      await User.findOneAndUpdate( //need to update the thought within the User profile too
         { username: req.body.username },
         {$addToSet: {thoughts: thinking._id}},
         { runValidators: true, new: true }
@@ -67,10 +66,17 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  async deleteThought(req, res) {
+  async deleteThought(req, res) { //can't find the ids of thoughts
     try {
-      const neverMind = await Thought.findOne({ _id: req.params.thoughtId });
-
+      const neverMind = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $pull: {thoughts: thinking._id}},
+        { runValidators: true, new: true }
+      );
+      await User.findOneAndUpdate( //need to update the thought within the User profile too
+        { username: req.body.username },
+        {$addToSet: {thoughts: thinking._id}},
+        { runValidators: true, new: true })
       if (!neverMind) {
         return res.status(404).json({ message: 'No thoughts originally logged with this id!' });
       }
@@ -97,7 +103,7 @@ module.exports = {
     try {
       const thoughtful = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $addToSet: { reactionBody: req.body } },
+        { $addToSet: { reactionBody: req.body.thoughtId } },//response or reactions ?
         { runValidators: true, new: true }
       );//reactionBody and username - NOT UPDATING
 
