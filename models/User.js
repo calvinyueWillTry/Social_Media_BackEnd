@@ -15,10 +15,10 @@ const userSchema = new Schema({
         //match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/],
         //email matching validation
     },
-    thoughts: [
+    thoughts: [//name of array
         {
             type: Schema.Types.ObjectId,
-            ref: 'thought',
+            ref: 'thought',//Thought is preferred
         },
     ],
     friends: [

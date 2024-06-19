@@ -2,6 +2,7 @@ const { Thought, User } = require('../models');
 
 module.exports = {
   async getThoughts(req, res) {
+    console.log(req, res);//not reaching here
     try {
       const thoughts = await Thought.find();
       res.json(thoughts);
@@ -68,24 +69,19 @@ module.exports = {
   },
   async deleteThought(req, res) { //can't find the ids of thoughts
     try {
-      const neverMind = await Thought.findOneAndUpdate(
-        { _id: req.params.thoughtId },
-        { $pull: {thoughts: thinking._id}},
-        { runValidators: true, new: true }
+      console.log("deleteThought", req.params.thoughtId);
+      const neverMind = await Thought.findOneAndDelete(
+        { _id: req.params.thoughtId }
+       
       );
-      await User.findOneAndUpdate( //need to update the thought within the User profile too
-        { username: req.body.username },
-        {$addToSet: {thoughts: thinking._id}},
-        { runValidators: true, new: true })
       if (!neverMind) {
         return res.status(404).json({ message: 'No thoughts originally logged with this id!' });
       }
-
-      const users = await User.findOneAndDelete(
-        { neverMind: req.params.thoughtId },
-        { $pull: { neverMind: req.params.thoughtId } },
-        { new: true }
-      );
+      const users = await User.findOneAndUpdate( 
+        { thoughts: req.params.thoughtId },
+        {$pull: {thoughts: req.params.thoughtId}}, 
+        {new: true}
+        )
 
       if (!users) {
         return res
@@ -95,6 +91,7 @@ module.exports = {
 
       res.json({ message: 'Thought successfully deleted!' });
     } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
@@ -103,7 +100,7 @@ module.exports = {
     try {
       const thoughtful = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $addToSet: { reactionBody: req.body.thoughtId } },//response or reactions ?
+        { $addToSet: { reactions: req.body } },//response or reactions ?
         { runValidators: true, new: true }
       );//reactionBody and username - NOT UPDATING
 
