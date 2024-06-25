@@ -3,24 +3,18 @@ const User = require('../models/User');
 module.exports = {
   async getUsers(req, res) {
     try {
-      const users = await User.find().select("-_v").populate("thoughts", "friends");
-      res.json(users);
+      const users = await User.find().populate("friends").populate("thoughts");
+      res.json(users);//needs response otherwise nowhere to send to
     } catch (err) {
       res.status(500).json(err);
     }
   },
   async getSingleUser(req, res) {
-    try {
+    console.log(req.params);
+    try { 
       const user = await User.findOne({ _id: req.params.userId })
-      .populate("thoughts", "friends")
+      .populate("friends").populate("thoughts").then((user)=>res.json( user));
 
-      .select('-__v');
-//e.g. ("-friends") would exclude the friends column
-      if (!user) {
-        return res.status(404).json({ message: 'No user with that ID' });
-      }
-
-      res.json(user);
     } catch (err) {
       res.status(500).json(err);
     }
