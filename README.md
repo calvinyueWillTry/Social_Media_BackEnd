@@ -11,15 +11,10 @@ These are finally all sent to the server (root level index) file, to allow it to
 Within the models, there are minimal requirements to fulfill the criteria for inputting all CRUD routes. User requires username and email, Thought requires username and thoughtText (which User put out that thought), and Reaction only requires the thoughtId in the URL, followed by "/reactions" with the reactionBody (reaction text to the thought posted) and username (who wrote it) in the req.body.
 
 ## Controllers
+This is where the functions are created and defined. Each has a keyword method. For example, getUser requires find(), getSingleUser requires findOne(), createUser requires create(), updateUser and addFriend and removeFriend requires findOneAndUpdate(), deleteUser requires findOneAndDelete(). Within the paranthesis following the method(is the parameters required, and how to address those). For example, Some require specific id of either the User or Thought or Reaction, others require a req.body to be able to put the context (e.g. thoughtText, reactionBody, etc.) into the array. 
 
+## Routes
 
-## Getting Started
-
-Be sure to have MongoDB installed on your machine. Follow the [MongoDB installation guide on The Full-Stack Blog](https://coding-boot-camp.github.io/full-stack/mongodb/how-to-install-mongodb) to install MongoDB locally.
-
-Use the following guidelines to set up your models and API routes:
-
-### Models
 
 **User**:
 
